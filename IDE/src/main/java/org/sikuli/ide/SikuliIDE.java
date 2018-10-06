@@ -3,73 +3,9 @@
  */
 package org.sikuli.ide;
 
-import java.awt.AWTEvent;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.AWTEventListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.ToolTipManager;
-import javax.swing.WindowConstants;
-import javax.swing.event.ChangeListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultEditorKit;
-import javax.swing.undo.CannotRedoException;
-import javax.swing.undo.CannotUndoException;
-
 import org.apache.commons.cli.CommandLine;
 import org.jdesktop.swingx.JXCollapsiblePane;
+import org.jdesktop.swingx.JXSearchField;
 import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;
 //import org.sikuli.android.ADBClient;
@@ -104,6 +40,25 @@ import org.sikuli.util.EventObserver;
 import org.sikuli.util.EventSubject;
 import org.sikuli.util.OverlayCapturePrompt;
 import org.sikuli.util.SikulixFileChooser;
+
+import javax.swing.*;
+import javax.swing.event.ChangeListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.*;
+import java.io.*;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.*;
+import java.util.List;
 
 public class SikuliIDE extends JFrame implements InvocationHandler {
 
@@ -408,12 +363,6 @@ public class SikuliIDE extends JFrame implements InvocationHandler {
 
     Debug.log(3, "IDE: Putting all together");
     JPanel editPane = new JPanel(new BorderLayout(0, 0));
-
-    // add by enack(20181007)
-    JComponent cp = createCommandPane();
-    if (PreferencesUser.getInstance().getPrefMoreCommandBar()) {
-      editPane.add(cp, BorderLayout.WEST);
-    }
 
     editPane.add(_mainSplitPane, BorderLayout.CENTER);
     ideContainer.add(editPane, BorderLayout.CENTER);
@@ -1767,12 +1716,12 @@ public class SikuliIDE extends JFrame implements InvocationHandler {
     _viewMenu = new JMenu(_I("menuView"));
     _viewMenu.setMnemonic(java.awt.event.KeyEvent.VK_V);
 
-    if (prefs.getPrefMoreCommandBar()) {
-      chkShowCmdList = new JCheckBoxMenuItem(_I("menuViewCommandList"), true);
-      _viewMenu.add(createMenuItem(chkShowCmdList,
-              KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, scMask),
-              new ViewAction(ViewAction.CMD_LIST)));
-    }
+//    if (prefs.getPrefMoreCommandBar()) {
+//      chkShowCmdList = new JCheckBoxMenuItem(_I("menuViewCommandList"), true);
+//      _viewMenu.add(createMenuItem(chkShowCmdList,
+//              KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, scMask),
+//              new ViewAction(ViewAction.CMD_LIST)));
+//    }
 
     chkShowThumbs = new JCheckBoxMenuItem(_I("menuViewShowThumbs"), false);
     _viewMenu.add(createMenuItem(chkShowThumbs,
