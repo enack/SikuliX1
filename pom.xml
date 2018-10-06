@@ -50,7 +50,7 @@
     <sikulixvmaj>1</sikulixvmaj>
     <sikulixvmin>1</sikulixvmin>
     <sikulixvsub>4</sikulixvsub>
-    <sikulixbeta>0</sikulixbeta>
+    <sikulixbeta>20181007</sikulixbeta>
     <!--   this decides, where setup downloads from   -->
     <!--<sikulixdev>release</sikulixdev>-->
     <sikulixdev>development</sikulixdev>
